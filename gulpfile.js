@@ -74,6 +74,7 @@ gulp.task('default', ['build', 'watch']);
 function buildTask() {
 
   var bundled = browserify('./src/chart.js')
+    .transform('babelify', {presets: ["es2015", "react"]})
     .bundle()
     .pipe(source('Chart.bundle.js'))
     .pipe(insert.prepend(header))
@@ -87,6 +88,7 @@ function buildTask() {
 
   var nonBundled = browserify('./src/chart.js')
     .ignore('moment')
+      .transform('babelify', {presets: ["es2015", "react"]})
     .bundle()
     .pipe(source('Chart.js'))
     .pipe(insert.prepend(header))
